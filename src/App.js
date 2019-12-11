@@ -4,7 +4,17 @@ import Logo from './components/logo/Logo'
 import ImageLinkForm from './components/imageLinkForm/ImageLinkForm'
 import Rank from './components/rank/Rank'
 import FaceRecognition from './components/faceRecognition/FaceRecognition'
+import Clarifai from 'clarifai'
 import './App.css';
+
+
+
+
+
+const app = new Clarifai.App({
+  apiKey: 'e76a34d331c24ef7b620b19d58423eac'
+ });
+ 
 
 class App extends React.Component {
 
@@ -12,8 +22,29 @@ class App extends React.Component {
     super();
     this.state={
       input:'',
-      imageUrl:''
+      imageUrl:'',
+      box:{}
     }
+  }
+
+  calculateFaceLocation=(data)=>{
+    const clarifaiFace= data.outputs[0].data_regions[0].region_info.bounding_box
+    const image = document.getElementById('inputimage')
+    const width= Number(image.width)
+    const height = Number(image.height)
+    console.log(width, height)
+    return{
+      leftol:clarifaiFace.left_col* width,
+      topRow:clarifaiFace.top_row * height,
+      rightCol: width-(clarifaiFace.right_col * width),
+      bottomRow: height - (clarifaiFace.bottom_row *height)
+
+    }
+  }
+
+
+  displayFaceBox=(box)=>{
+    this.setState({box:box})
   }
 
   onInputChange=(event)=>{
@@ -26,11 +57,15 @@ class App extends React.Component {
 
   onSubmit=()=>{
     this.setState({
-      imageUrl: this.state.input
+      imageUrl:this.state.input
     })
-    console.log('submit')
+    app.models
+      .predict(
+        Clarifai.FACE_DETECT_MODEL,
+        this.state.input)
+      .then(response=>this.displayFaceBox(this.calculateFaceLocation(response)))
+      .catch(err=>console.log(err))
   }
-
   render(){
     return (
       <div className="App">
@@ -41,7 +76,7 @@ class App extends React.Component {
         onSubmit={this.onSubmit}
         onInputChange={this.onInputChange}/>
 
-        <FaceRecognition imageUrl={this.state.imageUrl} /> 
+        <FaceRecognition imageUrl={this.state.imageUrl} box={this.state.box} /> 
         
       </div>
     );
