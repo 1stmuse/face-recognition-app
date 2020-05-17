@@ -110,7 +110,7 @@ class App extends React.Component {
       this.displayFaceBox(this.calculateFaceLocation(response))
     })
     .catch(err=>console.log(err));
-    this.state.input=''
+    this.setState({input: ''})
   }
 
 
@@ -128,7 +128,7 @@ class App extends React.Component {
 
 
   render(){
-    const {isSignedIn, imageUrl, route, box}  = this.state;
+    const {imageUrl, route, box}  = this.state;
     return (
       <div className="App">
         <Navigation onRouteChange={this.onRouteChange} isSignedIn={this.state.isSignedIn} />

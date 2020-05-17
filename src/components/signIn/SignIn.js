@@ -34,7 +34,7 @@ class SignIn extends React.Component {
             .then(data=>{
                 if(data){
                   this.props.loadUser(data)
-                  this.props.onRouteChange('home') 
+                //   this.props.onRouteChange('home') 
                 }
             })
     }
