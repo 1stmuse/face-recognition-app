@@ -7,36 +7,37 @@ class SignIn extends React.Component {
     constructor(){
         super();
         this.state={
-            signInEmail:'',
-            signInPassword:''
+            email:'',
+            password:''
         }
     }
 
-    onEmailChange=(event)=>{
-        this.setState({signInEmail: event.target.value})
-    }
-
-    onPasswordChange=(event)=>{
-        this.setState({signInPassword: event.target.value})
+    onInput =(e)=>{
+        e.preventDefault()
+        const {name}=e.target
+        this.setState({
+            [name]: e.target.value
+        })
     }
 
 
     onSubmitSignIn=()=>{
-        fetch('http://localhost:3000/signin', {
+        fetch('http://localhost:4000/api/users/login', {
             method:'post',
             headers:{'Content-Type': 'application/json'},
             body: JSON.stringify({
-                email:this.state.signInEmail,
-                password:this.state.signInPassword
+                email:this.state.email,
+                password:this.state.password
             })
         })
-            .then(res=>res.json())
-            .then(data=>{
-                if(data){
-                  this.props.loadUser(data)
-                //   this.props.onRouteChange('home') 
-                }
-            })
+        .then(res=>res.json())
+        .then(data=>{
+            if(data.user){
+                this.props.loadUser(data.user)
+                this.props.onRouteChange('home') 
+            }
+        })
+        .catch(err=> alert('error login  it', err))
     }
 
 
@@ -53,9 +54,9 @@ class SignIn extends React.Component {
                         <input 
                             className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
                             type="email" 
-                            name="email-address"  
+                            name="email"  
                             id="email-address"
-                            onChange={this.onEmailChange}
+                            onChange={this.onInput}
                         />
                         </div>
                         <div className="mv3">
@@ -65,7 +66,7 @@ class SignIn extends React.Component {
                             type="password" 
                             name="password"  
                             id="password"
-                            onChange={this.onPasswordChange}
+                            onChange={this.onInput}
                         />
                         </div>
                     </fieldset>

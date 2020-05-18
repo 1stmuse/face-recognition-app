@@ -13,16 +13,12 @@ class Register extends React.Component{
         }
     }
 
-    onEmailChange=(event)=>{
-        this.setState({email: event.target.value})
-    }
-
-    onNameChange=(event)=>{
-        this.setState({name: event.target.value})
-    }
-
-    onPasswordChange=(event)=>{
-        this.setState({password: event.target.value})
+    onInput =(e)=>{
+        e.preventDefault()
+        const {name}=e.target
+        this.setState({
+            [name]: e.target.value
+        })
     }
     
 
@@ -57,15 +53,15 @@ class Register extends React.Component{
                         <input 
                             className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
                             type="text" name="name"  id="name"
-                            onChange={this.onNameChange}
+                            onChange={this.onInput}
                         />
                         </div>
                         <div className="mt3">
                         <label className="db fw6 lh-copy f6" htmlFor="email-address">Email</label>
                         <input 
                             className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
-                            type="email" name="email-address"  id="email-address"
-                            onChange={this.onEmailChange}
+                            type="email" name="email"  id="email-address"
+                            onChange={this.onInput}
                         />
                         </div>
                         <div className="mv3">
@@ -73,7 +69,7 @@ class Register extends React.Component{
                         <input 
                             className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
                             type="password" name="password"  id="password"
-                            onChange={this.onPasswordChange}
+                            onChange={this.onInput}
                         />
                         </div>
                     </fieldset>

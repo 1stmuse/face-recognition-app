@@ -48,8 +48,6 @@ class App extends React.Component {
     this.setState({
         user:{
           name:data.name,
-          email:data.email,
-          id:data.id,
           entries:data.entries,
           joined:data.joined
         }
@@ -61,6 +59,8 @@ class App extends React.Component {
     const image = document.getElementById('inputimage')
     const width= Number(image.width)
     const height = Number(image.height)
+    console.log('the main data', data)
+    console.log( 'the clarifai data',clarifaiFace)
     console.log(width, height)
     return{
       leftCol:clarifaiFace.left_col* width,
