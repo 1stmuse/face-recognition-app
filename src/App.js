@@ -10,16 +10,11 @@ import Register from './components/register/Register'
 import './App.css';
 
 
-
-
-
 const app = new Clarifai.App({
   apiKey: 'e76a34d331c24ef7b620b19d58423eac'
  });
  
-
 class App extends React.Component {
-
   constructor(){
     super();
     this.state={
@@ -38,16 +33,11 @@ class App extends React.Component {
     }
   }
 
-  // componentDidMount(){
-  //   fetch('http://localhost:3000')
-  //     .then(response=>response.json())
-  //     .then(console.log)
-  // }
- 
   loadUser=(data)=>{
     this.setState({
         user:{
           name:data.name,
+          id:data._id,
           entries:data.entries,
           joined:data.joined
         }
@@ -59,9 +49,6 @@ class App extends React.Component {
     const image = document.getElementById('inputimage')
     const width= Number(image.width)
     const height = Number(image.height)
-    console.log('the main data', data)
-    console.log( 'the clarifai data',clarifaiFace)
-    console.log(width, height)
     return{
       leftCol:clarifaiFace.left_col* width,
       topRow:clarifaiFace.top_row * height,
@@ -71,13 +58,11 @@ class App extends React.Component {
     }
   }
 
-
   displayFaceBox=(box)=>{
     this.setState({box:box})
   }
 
   onInputChange=(event)=>{
-    // console.log(event.target.value)
     this.setState({
       input:event.target.value
     })
@@ -92,8 +77,8 @@ class App extends React.Component {
     app.models.predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
     .then(response=>{
       if(response){
-        fetch('http://localhost:3000/image',{
-          method:'put',
+        fetch('http://localhost:4000/api/users/upload',{
+          method:'post',
           headers:{'Content-Type': 'application/json'},
           body: JSON.stringify({
               id:this.state.user.id
@@ -113,7 +98,6 @@ class App extends React.Component {
     this.setState({input: ''})
   }
 
-
   onRouteChange=(route)=>{
     if(route==='signout'){
       this.setState({isSignedIn:false})
@@ -124,8 +108,6 @@ class App extends React.Component {
       route:route
     })
   }
-
-
 
   render(){
     const {imageUrl, route, box}  = this.state;

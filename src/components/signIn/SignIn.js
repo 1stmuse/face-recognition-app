@@ -1,8 +1,5 @@
 import React from 'react';
 
-
-
-
 class SignIn extends React.Component {
     constructor(){
         super();
@@ -19,7 +16,6 @@ class SignIn extends React.Component {
             [name]: e.target.value
         })
     }
-
 
     onSubmitSignIn=()=>{
         fetch('http://localhost:4000/api/users/login', {
@@ -39,7 +35,6 @@ class SignIn extends React.Component {
         })
         .catch(err=> alert('error login  it', err))
     }
-
 
     render(){
         const {onRouteChange} = this.props

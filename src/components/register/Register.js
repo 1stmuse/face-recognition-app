@@ -1,8 +1,5 @@
 import React from 'react';
 
-
-
-
 class Register extends React.Component{
     constructor(){
         super();
@@ -21,7 +18,6 @@ class Register extends React.Component{
         })
     }
     
-
     onSubmitSignIn=()=>{
         fetch('http://localhost:3000/register', {
             method:'post',
