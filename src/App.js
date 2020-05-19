@@ -77,7 +77,7 @@ class App extends React.Component {
     app.models.predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
     .then(response=>{
       if(response){
-        fetch('http://localhost:4000/api/users/upload',{
+        fetch('api/users/upload',{
           method:'post',
           headers:{'Content-Type': 'application/json'},
           body: JSON.stringify({

@@ -18,7 +18,7 @@ class SignIn extends React.Component {
     }
 
     onSubmitSignIn=()=>{
-        fetch('http://localhost:4000/api/users/login', {
+        fetch('api/users/login', {
             method:'post',
             headers:{'Content-Type': 'application/json'},
             body: JSON.stringify({
