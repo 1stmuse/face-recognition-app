@@ -62,9 +62,10 @@ class App extends React.Component {
     this.setState({box:box})
   }
 
-  onInputChange=(event)=>{
+  pload=(url)=>{
     this.setState({
-      input:event.target.value
+      imageUrl:url,
+      input:url
     })
 
   }
@@ -120,7 +121,7 @@ class App extends React.Component {
               <Rank name={this.state.user.name} entries={this.state.user.entries} />
               <ImageLinkForm 
               onSubmit={this.onSubmit}
-              onInputChange={this.onInputChange}/>
+              pload={this.pload}/>
 
               <FaceRecognition imageUrl={imageUrl} box={box} /> 
             </div>
