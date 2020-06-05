@@ -76,7 +76,7 @@ class App extends React.Component {
     app.models.predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
     .then(response=>{
       if(response){
-        fetch('api/users/upload',{
+        fetch('https://recog-backend.herokuapp.com/api/users/upload',{
           method:'post',
           headers:{'Content-Type': 'application/json'},
           body: JSON.stringify({
