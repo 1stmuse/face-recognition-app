@@ -21,7 +21,7 @@ class App extends React.Component {
       input:'',
       imageUrl:'',
       box:{},
-      route:'home',
+      route:'signin',
       isSignedIn:false,
       user:{
         name:'',
@@ -71,9 +71,7 @@ class App extends React.Component {
   }
 
   onSubmit=()=>{
-    this.setState({
-      imageUrl:this.state.input
-    })
+
 
     app.models.predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
     .then(response=>{
