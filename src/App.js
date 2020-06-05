@@ -71,8 +71,6 @@ class App extends React.Component {
   }
 
   onSubmit=()=>{
-
-
     app.models.predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
     .then(response=>{
       if(response){
